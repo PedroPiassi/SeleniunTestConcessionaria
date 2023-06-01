@@ -39,5 +39,15 @@ class MainTest {
         Thread.sleep(Duration.ofSeconds(2));
     }
 
+    @Test
+    @DisplayName("Should open list page when nav list link clicked")
+    void shouldOpenListPageWhenNavListLinkClicked() {
+        driver.get("http://localhost:5173");
 
+        final WebElement navLink = new WebDriverWait(driver, Duration.ofSeconds(2))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"navbarNav\"]/ul/li[2]/a")));
+        navLink.click();
+
+        assertThatNoException().isThrownBy(() -> driver.findElement(By.xpath("//*[@id=\"root\"]/table")));
+    }
 }
