@@ -40,6 +40,17 @@ class MainTest {
     }
 
     @Test
+    @DisplayName("Should open create page when nav create link clicked")
+    void shouldOpenCreatePageWhenNavCreateLinkClicked(){
+        driver.get("http://localhost:5173");
+        final WebElement navLink = new WebDriverWait(driver, Duration.ofSeconds(2))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"navbarNav\"]/ul/li[1]/a")));
+        navLink.click();
+
+        assertThatNoException().isThrownBy(() -> driver.findElement(By.xpath("//*[@id=\"root\"]/div/form")));
+    }
+
+    @Test
     @DisplayName("Should open list page when nav list link clicked")
     void shouldOpenListPageWhenNavListLinkClicked() {
         driver.get("http://localhost:5173");
