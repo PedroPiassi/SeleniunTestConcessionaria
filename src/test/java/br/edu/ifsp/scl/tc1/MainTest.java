@@ -61,4 +61,18 @@ class MainTest {
 
         assertThatNoException().isThrownBy(() -> driver.findElement(By.xpath("//*[@id=\"root\"]/table")));
     }
+
+    @Test
+    @DisplayName("Should open create page when image create link clicked")
+    void ShouldOpenCreatePageWhenImageCreateLinkClicked() {
+        driver.get("http://localhost:5173");
+
+        final WebElement imageLink = new WebDriverWait(driver, Duration.ofSeconds(2))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[1]/div/div/a")));
+        imageLink.click();
+
+        assertThatNoException().isThrownBy(() -> driver.findElement(By.xpath("//*[@id=\"root\"]/div/form")));
+    }
+
+
 }
