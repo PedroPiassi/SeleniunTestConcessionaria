@@ -124,4 +124,17 @@ class MainTest {
         String currentUrl = driver.getCurrentUrl();
         assertThat(currentUrl).isEqualTo("https://twitter.com/elonmusk");
     }
+
+    @Test
+    @DisplayName("Should open home page when car icon clicked")
+    void ShouldOpenHomePageWhenCarIconClicked() {
+        driver.get("http://localhost:5173/list");
+
+        final WebElement iconCar = new WebDriverWait(driver, Duration.ofSeconds(2))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/nav/div/a")));
+        iconCar.click();
+
+        String currentUrl = driver.getCurrentUrl();
+        assertThat(currentUrl).isEqualTo("http://localhost:5173/");
+    }
 }
