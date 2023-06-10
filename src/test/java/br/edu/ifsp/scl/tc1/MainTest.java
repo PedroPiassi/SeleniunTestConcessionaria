@@ -111,4 +111,17 @@ class MainTest {
         String currentUrl = driver.getCurrentUrl();
         assertThat(currentUrl).isEqualTo("https://www.linkedin.com/in/hdk101/");
     }
+
+    @Test
+    @DisplayName("Should open twitter page when twitter icon clicked")
+    void ShouldOpenTwitterPageWhenTwitterIconClicked() {
+        driver.get("http://localhost:5173");
+
+        final WebElement iconLinkedin = new WebDriverWait(driver, Duration.ofSeconds(2))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/footer/div/div[2]/div[3]/a")));
+        iconLinkedin.click();
+
+        String currentUrl = driver.getCurrentUrl();
+        assertThat(currentUrl).isEqualTo("https://twitter.com/elonmusk");
+    }
 }
