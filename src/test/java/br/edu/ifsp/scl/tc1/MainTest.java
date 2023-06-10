@@ -137,4 +137,17 @@ class MainTest {
         String currentUrl = driver.getCurrentUrl();
         assertThat(currentUrl).isEqualTo("http://localhost:5173/");
     }
+
+    @Test
+    @DisplayName("Should open create page when create button clicked")
+    void ShouldOpenCreatePageWhenCreateButtonClicked() {
+        driver.get("http://localhost:5173/list");
+
+        final WebElement createButton = new WebDriverWait(driver, Duration.ofSeconds(2))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/button")));
+        createButton.click();
+
+        String currentUrl = driver.getCurrentUrl();
+        assertThat(currentUrl).isEqualTo("http://localhost:5173/create");
+    }
 }
