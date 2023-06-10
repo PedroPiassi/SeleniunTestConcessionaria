@@ -85,4 +85,17 @@ class MainTest {
 
         assertThatNoException().isThrownBy(() -> driver.findElement(By.xpath("//*[@id=\"root\"]/table")));
     }
+
+    @Test
+    @DisplayName("Should open instagram page when instagram icon clicked")
+    void ShouldOpenInstagramPageWhenInstagramIconClicked() {
+        driver.get("http://localhost:5173");
+
+        final WebElement iconInstagram = new WebDriverWait(driver, Duration.ofSeconds(2))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/footer/div/div[2]/div[1]/a")));
+        iconInstagram.click();
+
+        String currentUrl = driver.getCurrentUrl();
+        assertThat(currentUrl).isEqualTo("https://www.instagram.com/center_cars_web/");
+    }
 }
