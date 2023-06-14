@@ -191,6 +191,23 @@ class MainTest {
             String urlPage = driver.getCurrentUrl();
             assertThat(urlPage).isEqualTo(HOME_PAGE_URL);
         }
+
+        @Test
+        @DisplayName("Should open edit page of selected element in table")
+        void ShouldOpenEditPageOfSelectedElementInTable() {
+            driver.get("http://localhost:5173/list");
+
+            final String stringCarID = driver.findElement(By.xpath("//*[@id=\"root\"]/table/tbody/tr[1]/td[1]")).getText();
+            final Integer carID = Integer.parseInt(stringCarID);
+            final WebElement editButton = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/table/tbody/tr[1]/td[9]/button")));
+            editButton.click();
+
+            final String urlPage = driver.getCurrentUrl();
+            final Integer lastCharOfUrlPage = Integer.parseInt(String.valueOf(urlPage.charAt(urlPage.length() - 1)));
+
+            assertThat(lastCharOfUrlPage).isEqualTo(carID);
+        }
     }
 
     @Nested @DisplayName("In create page")
