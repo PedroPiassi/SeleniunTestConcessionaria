@@ -212,5 +212,17 @@ class MainTest {
             String urlPage = driver.getCurrentUrl();
             assertThat(urlPage).isEqualTo("http://localhost:5173/create");
         }
+
+        @Test
+        @DisplayName("Should open home page when nav home link clicked by create page")
+        void shouldOpenHomePageWhenNavHomeLinkClickedByHomePage() {
+            driver.get("http://localhost:5173/create");
+            final WebElement navLink = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/nav/div/a")));
+            navLink.click();
+
+            String urlPage = driver.getCurrentUrl();
+            assertThat(urlPage).isEqualTo("http://localhost:5173/");
+        }
     }
 }
