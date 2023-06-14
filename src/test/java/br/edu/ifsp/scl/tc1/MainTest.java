@@ -173,5 +173,17 @@ class MainTest {
             String urlPage = driver.getCurrentUrl();
             assertThat(urlPage).isEqualTo("http://localhost:5173/list");
         }
+
+        @Test
+        @DisplayName("Should open home page when nav home link clicked by list page")
+        void shouldOpenHomePageWhenNavHomeLinkClickedByListPage() {
+            driver.get("http://localhost:5173/list");
+            final WebElement navLink = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/nav/div/a")));
+            navLink.click();
+
+            String urlPage = driver.getCurrentUrl();
+            assertThat(urlPage).isEqualTo("http://localhost:5173/");
+        }
     }
 }
