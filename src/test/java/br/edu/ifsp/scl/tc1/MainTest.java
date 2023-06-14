@@ -186,4 +186,19 @@ class MainTest {
             assertThat(urlPage).isEqualTo("http://localhost:5173/");
         }
     }
+
+    @Nested @DisplayName("In create page")
+    class TestOfCreatePage {
+        @Test
+        @DisplayName("Should open list page when nav list link clicked by create page")
+        void shouldOpenListPageWhenNavListLinkClickedByListPage() {
+            driver.get("http://localhost:5173/create");
+            final WebElement navLink = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"navbarNav\"]/ul/li[2]/a")));
+            navLink.click();
+
+            String urlPage = driver.getCurrentUrl();
+            assertThat(urlPage).isEqualTo("http://localhost:5173/list");
+        }
+    }
 }
