@@ -1,13 +1,13 @@
 package br.edu.ifsp.scl.tc1;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.assertj.core.api.Assertions.*;
@@ -207,6 +207,38 @@ class MainTest {
             final Integer lastCharOfUrlPage = Integer.parseInt(String.valueOf(urlPage.charAt(urlPage.length() - 1)));
 
             assertThat(lastCharOfUrlPage).isEqualTo(carID);
+        }
+
+        @Test
+        @DisplayName("Should verify that edit form input is correctly fill")
+        void shouldVerifyThatEditFormInputIsCorrectlyFill() {
+            driver.get("http://localhost:5173/list");
+
+            final List<WebElement> rowElements = driver.findElement(By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]")).findElements(By.tagName("td"));
+            final List<String> rowData = rowElements.stream().map(WebElement::getText).toList();
+
+            final WebElement editButton = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]/td[9]/button")));
+            editButton.click();
+
+            final String name = driver.findElement(By.id("name")).getAttribute("value");
+            final String year = driver.findElement(By.id("year")).getAttribute("value");
+            final String price = driver.findElement(By.id("price")).getAttribute("value");
+            final String status = driver.findElement(By.id("status")).getAttribute("value");
+            final String brand = driver.findElement(By.id("brand")).getAttribute("value");
+            final String warranty = driver.findElement(By.id("warranty")).getAttribute("value");
+            final String description = driver.findElement(By.id("description")).getAttribute("value");
+
+            SoftAssertions softly = new SoftAssertions();
+            softly.assertThat(name).isEqualTo(rowData.get(1));
+            softly.assertThat(year).isEqualTo(rowData.get(2));
+            softly.assertThat(price).isEqualTo(rowData.get(3));
+            softly.assertThat(status).isEqualTo(rowData.get(4));
+            softly.assertThat(brand).isEqualTo(rowData.get(5));
+            softly.assertThat(warranty).isEqualTo(rowData.get(6));
+            softly.assertThat(description).isEqualTo(rowData.get(7));
+
+            softly.assertAll();
         }
     }
 
