@@ -352,5 +352,20 @@ class MainTest {
 
             assertThat(alert.isDisplayed()).isTrue();
         }
+
+        @Test
+        @DisplayName("Should alert if year is null in create form")
+        void shouldAlertIfYearIsNullInCreateForm() {
+            driver.get(CREATE_PAGE_URL);
+
+            final WebElement button = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"root\"]/div/form/button")));
+            button.click();
+
+            final WebElement alert = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"root\"]/div/form/div[1]/div/div[2]/div[2]")));
+
+            assertThat(alert.isDisplayed()).isTrue();
+        }
     }
 }
