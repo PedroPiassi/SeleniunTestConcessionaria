@@ -263,5 +263,16 @@ class MainTest {
 
             assertThat(input.isDisplayed()).isTrue();
         }
+
+        @Test
+        @DisplayName("Should find brand input field in create form")
+        void shouldFindBrandInputFieldInCreateForm() {
+            driver.get(CREATE_PAGE_URL);
+
+            final WebElement input = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"brand\"]")));
+
+            assertThat(input.isDisplayed()).isTrue();
+        }
     }
 }
