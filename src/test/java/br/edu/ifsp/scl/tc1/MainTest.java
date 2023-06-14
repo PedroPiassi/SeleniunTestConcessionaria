@@ -401,5 +401,24 @@ class MainTest {
 
             assertThat(alert.isDisplayed()).isTrue();
         }
+
+        @Test
+        @DisplayName("Should alert if brand is blank in create form")
+        void shouldAlertIfBrandIsBlankInCreateForm() {
+            driver.get(CREATE_PAGE_URL);
+
+            final WebElement input = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"brand\"]")));
+            input.sendKeys(" ");
+
+            final WebElement button = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"root\"]/div/form/button")));
+            button.click();
+
+            final WebElement alert = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"root\"]/div/form/div[2]/div/div[1]/div[2]")));
+
+            assertThat(alert.isDisplayed()).isTrue();
+        }
     }
 }
