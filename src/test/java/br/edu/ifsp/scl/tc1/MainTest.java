@@ -296,5 +296,16 @@ class MainTest {
 
             assertThat(input.isDisplayed()).isTrue();
         }
+
+        @Test
+        @DisplayName("Should find status input field in create form")
+        void shouldFindStatusInputFieldInCreateForm() {
+            driver.get(CREATE_PAGE_URL);
+
+            final WebElement input = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"status\"]")));
+
+            assertThat(input.isDisplayed()).isTrue();
+        }
     }
 }
