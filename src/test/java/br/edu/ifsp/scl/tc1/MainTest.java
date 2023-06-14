@@ -159,8 +159,19 @@ class MainTest {
             navLink.click();
 
             String urlPage = driver.getCurrentUrl();
-
             assertThat(urlPage).isEqualTo("http://localhost:5173/create");
+        }
+
+        @Test
+        @DisplayName("Should keeps in list page when nav list link clicked by list page")
+        void shouldKeepsInListPageWhenNavListLinkClickedByListPage() {
+            driver.get("http://localhost:5173/list");
+            final WebElement navLink = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"navbarNav\"]/ul/li[2]/a")));
+            navLink.click();
+
+            String urlPage = driver.getCurrentUrl();
+            assertThat(urlPage).isEqualTo("http://localhost:5173/list");
         }
     }
 }
