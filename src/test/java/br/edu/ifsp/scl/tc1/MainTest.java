@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.Duration;
+import java.util.List;
 
 class MainTest {
     private WebDriver driver;
@@ -223,6 +224,17 @@ class MainTest {
 
             String urlPage = driver.getCurrentUrl();
             assertThat(urlPage).isEqualTo("http://localhost:5173/");
+        }
+
+        @Test
+        @DisplayName("Should find create form")
+        void shouldFindCreateForm() {
+            driver.get("http://localhost:5173/create");
+
+            final WebElement form = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"root\"]/div/form")));
+
+            assertThat(form.isDisplayed()).isTrue();
         }
     }
 }
