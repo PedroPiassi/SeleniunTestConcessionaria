@@ -1,10 +1,7 @@
 package br.edu.ifsp.scl.tc1;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -149,5 +146,21 @@ class MainTest {
 
         String currentUrl = driver.getCurrentUrl();
         assertThat(currentUrl).isEqualTo("http://localhost:5173/create");
+    }
+
+    @Nested @DisplayName("In list page")
+    class TestOfListPage {
+        @Test
+        @DisplayName("Should open create page when nav create link clicked by list page")
+        void shouldOpenCreatePageWhenNavCreateLinkClickedByListPage(){
+            driver.get("http://localhost:5173/list");
+            final WebElement navLink = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"navbarNav\"]/ul/li[1]/a")));
+            navLink.click();
+
+            String urlPage = driver.getCurrentUrl();
+
+            assertThat(urlPage).isEqualTo("http://localhost:5173/create");
+        }
     }
 }
