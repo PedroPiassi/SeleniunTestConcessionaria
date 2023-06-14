@@ -285,5 +285,16 @@ class MainTest {
 
             assertThat(input.isDisplayed()).isTrue();
         }
+
+        @Test
+        @DisplayName("Should find warranty input field in create form")
+        void shouldFindWarrantyInputFieldInCreateForm() {
+            driver.get(CREATE_PAGE_URL);
+
+            final WebElement input = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"warranty\"]")));
+
+            assertThat(input.isDisplayed()).isTrue();
+        }
     }
 }
