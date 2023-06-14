@@ -200,5 +200,17 @@ class MainTest {
             String urlPage = driver.getCurrentUrl();
             assertThat(urlPage).isEqualTo("http://localhost:5173/list");
         }
+
+        @Test
+        @DisplayName("Should keep in create page when nav create link clicked by create page")
+        void shouldKeepInCreatePageWhenNavCreateLinkClickedByCreatePage() {
+            driver.get("http://localhost:5173/create");
+            final WebElement navLink = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"navbarNav\"]/ul/li[1]/a")));
+            navLink.click();
+
+            String urlPage = driver.getCurrentUrl();
+            assertThat(urlPage).isEqualTo("http://localhost:5173/create");
+        }
     }
 }
