@@ -214,11 +214,11 @@ class MainTest {
         void beforeEach() {
             driver.get(LIST_PAGE_URL);
 
-            final List<WebElement> rowElements = driver.findElement(By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]")).findElements(By.tagName("td"));
+            final List<WebElement> rowElements = driver.findElement(By.xpath("//*[@id=\"root\"]/table/tbody/tr[1]")).findElements(By.tagName("td"));
             rowData.addAll(rowElements.stream().map(WebElement::getText).toList());
 
             final WebElement editButton = new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]/td[9]/button")));
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/table/tbody/tr[1]/td[9]/button")));
             editButton.click();
         }
         @Nested @DisplayName("Test inputs os form")
