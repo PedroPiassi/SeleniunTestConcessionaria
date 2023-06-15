@@ -1,7 +1,6 @@
 package br.edu.ifsp.scl.tc1;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -231,6 +230,15 @@ class MainTest {
                         .until(ExpectedConditions.elementToBeClickable(By.id("name"))).getAttribute("value");
 
                 assertThat(name).isEqualTo(rowData.get(1));
+            }
+
+            @Test
+            @DisplayName("Should verify that input year is correctly fill")
+            void shouldVerifyThatInputYearIsCorrectlyFill() {
+                final String year = new WebDriverWait(driver, Duration.ofSeconds(2))
+                        .until(ExpectedConditions.elementToBeClickable(By.id("year"))).getAttribute("value");
+
+                assertThat(year).isEqualTo(rowData.get(2));
             }
         }
         
