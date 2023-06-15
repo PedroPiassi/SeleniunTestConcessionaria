@@ -267,6 +267,15 @@ class MainTest {
 
                 assertThat(brand).isEqualTo(rowData.get(5));
             }
+
+            @Test
+            @DisplayName("Should verify that input warranty is correctly fill")
+            void shouldVerifyThatInputWarrantyIsCorrectlyFill() {
+                final String warranty = new WebDriverWait(driver, Duration.ofSeconds(2))
+                        .until(ExpectedConditions.elementToBeClickable(By.id("warranty"))).getAttribute("value");
+
+                assertThat(warranty).isEqualTo(rowData.get(6));
+            }
         }
         
         @Test
