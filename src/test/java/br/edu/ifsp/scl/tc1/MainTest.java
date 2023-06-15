@@ -195,7 +195,7 @@ class MainTest {
         @Test
         @DisplayName("Should open edit page of selected element in table")
         void ShouldOpenEditPageOfSelectedElementInTable() {
-            driver.get("http://localhost:5173/list");
+            driver.get(LIST_PAGE_URL);
 
             final String stringCarID = driver.findElement(By.xpath("//*[@id=\"root\"]/table/tbody/tr[1]/td[1]")).getText();
             final Integer carID = Integer.parseInt(stringCarID);
@@ -212,7 +212,7 @@ class MainTest {
         @Test
         @DisplayName("Should verify that edit form input is correctly fill")
         void shouldVerifyThatEditFormInputIsCorrectlyFill() {
-            driver.get("http://localhost:5173/list");
+            driver.get(LIST_PAGE_URL);
 
             final List<WebElement> rowElements = driver.findElement(By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]")).findElements(By.tagName("td"));
             final List<String> rowData = rowElements.stream().map(WebElement::getText).toList();
@@ -221,13 +221,20 @@ class MainTest {
                     .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]/td[9]/button")));
             editButton.click();
 
-            final String name = driver.findElement(By.id("name")).getAttribute("value");
-            final String year = driver.findElement(By.id("year")).getAttribute("value");
-            final String price = driver.findElement(By.id("price")).getAttribute("value");
-            final String status = driver.findElement(By.id("status")).getAttribute("value");
-            final String brand = driver.findElement(By.id("brand")).getAttribute("value");
-            final String warranty = driver.findElement(By.id("warranty")).getAttribute("value");
-            final String description = driver.findElement(By.id("description")).getAttribute("value");
+            final String name = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.id("name"))).getAttribute("value");
+            final String year = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.id("year"))).getAttribute("value");
+            final String price = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.id("price"))).getAttribute("value");
+            final String status = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.id("status"))).getAttribute("value");
+            final String brand = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.id("brand"))).getAttribute("value");
+            final String warranty = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.id("warranty"))).getAttribute("value");
+            final String description = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.id("description"))).getAttribute("value");
 
             SoftAssertions softly = new SoftAssertions();
             softly.assertThat(name).isEqualTo(rowData.get(1));
@@ -239,6 +246,36 @@ class MainTest {
             softly.assertThat(description).isEqualTo(rowData.get(7));
 
             softly.assertAll();
+        }
+
+        @Test
+        @DisplayName("Should edit to 4 year, the warranty of car with ID equals 2")
+        void shouldEditTo4YearTheWarrantyOfCarWithIdEquals2() {
+            driver.get(LIST_PAGE_URL);
+
+            final WebElement goToEditPage = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(
+                            By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]/td[9]/button")
+                    ));
+            goToEditPage.click();
+
+            final WebElement warrantyInput = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(By.id("warranty")));
+            warrantyInput.clear();
+            warrantyInput.sendKeys("4 anos");
+
+            final WebElement editButton = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(
+                            By.xpath("//*[@id=\"root\"]/div/form/button")
+                    ));
+            editButton.click();
+
+            final String warranty = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(
+                            By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]/td[7]")
+                    )).getText();
+
+            assertThat(warranty).isEqualTo("4 anos");
         }
     }
 
@@ -588,3 +625,6 @@ class MainTest {
         }
     }
 }
+/*
+[{"name":"Fiesta","year":2015,"brand":"Chevrolet","price":13000,"warranty":"5 anos","status":"Antigo","description":"Antigo, porÃ©m bem cuidado.","id":1},{"message":"Not Found, id=NaN","name":"Fiat","year":2011,"brand":"Chevrolet","price":10000,"warranty":"4 anos","status":"Antigo","description":"Antigo, porÃ©m bem cuidado e com bom chaci","id":2}]
+*/
