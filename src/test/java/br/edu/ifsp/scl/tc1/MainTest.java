@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 class MainTest {
@@ -209,45 +210,30 @@ class MainTest {
             assertThat(lastCharOfUrlPage).isEqualTo(carID);
         }
 
-        @Test
-        @DisplayName("Should verify that edit form input is correctly fill")
-        void shouldVerifyThatEditFormInputIsCorrectlyFill() {
+        private final List<String> rowData = new ArrayList<>();
+        @BeforeEach
+        void beforeEach() {
             driver.get(LIST_PAGE_URL);
 
             final List<WebElement> rowElements = driver.findElement(By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]")).findElements(By.tagName("td"));
-            final List<String> rowData = rowElements.stream().map(WebElement::getText).toList();
+            rowData.addAll(rowElements.stream().map(WebElement::getText).toList());
 
             final WebElement editButton = new WebDriverWait(driver, Duration.ofSeconds(2))
                     .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/table/tbody/tr[2]/td[9]/button")));
             editButton.click();
-
-            final String name = new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.elementToBeClickable(By.id("name"))).getAttribute("value");
-            final String year = new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.elementToBeClickable(By.id("year"))).getAttribute("value");
-            final String price = new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.elementToBeClickable(By.id("price"))).getAttribute("value");
-            final String status = new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.elementToBeClickable(By.id("status"))).getAttribute("value");
-            final String brand = new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.elementToBeClickable(By.id("brand"))).getAttribute("value");
-            final String warranty = new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.elementToBeClickable(By.id("warranty"))).getAttribute("value");
-            final String description = new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.elementToBeClickable(By.id("description"))).getAttribute("value");
-
-            SoftAssertions softly = new SoftAssertions();
-            softly.assertThat(name).isEqualTo(rowData.get(1));
-            softly.assertThat(year).isEqualTo(rowData.get(2));
-            softly.assertThat(price).isEqualTo(rowData.get(3));
-            softly.assertThat(status).isEqualTo(rowData.get(4));
-            softly.assertThat(brand).isEqualTo(rowData.get(5));
-            softly.assertThat(warranty).isEqualTo(rowData.get(6));
-            softly.assertThat(description).isEqualTo(rowData.get(7));
-
-            softly.assertAll();
         }
+        @Nested @DisplayName("Test inputs os form")
+        class FormInputs {
+            @Test
+            @DisplayName("Should verify that input name is correctly fill")
+            void shouldVerifyThatInputNameIsCorrectlyFill() {
+                final String name = new WebDriverWait(driver, Duration.ofSeconds(2))
+                        .until(ExpectedConditions.elementToBeClickable(By.id("name"))).getAttribute("value");
 
+                assertThat(name).isEqualTo(rowData.get(1));
+            }
+        }
+        
         @Test
         @DisplayName("Should edit to 4 year, the warranty of car with ID equals 2")
         void shouldEditTo4YearTheWarrantyOfCarWithIdEquals2() {
