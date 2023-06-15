@@ -277,6 +277,25 @@ class MainTest {
 
             assertThat(warranty).isEqualTo("4 anos");
         }
+
+        @Test
+        @DisplayName("Should remove car where ID is equals 1")
+        void shouldRemoveCarWhereIdIsEquals1() {
+            driver.get(LIST_PAGE_URL);
+
+            final WebElement removeButton = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(
+                            By.xpath("//*[@id=\"root\"]/table/tbody/tr[1]/td[10]/a")
+                    ));
+            removeButton.click();
+
+            final String idOfFirstTableRow = new WebDriverWait(driver, Duration.ofSeconds(2))
+                    .until(ExpectedConditions.elementToBeClickable(
+                            By.xpath("//*[@id=\"root\"]/table/tbody/tr[1]/td[1]")
+                    )).getText();
+
+            assertThat(idOfFirstTableRow).isNotEqualTo("1");
+        }
     }
 
     @Nested @DisplayName("In create page")
