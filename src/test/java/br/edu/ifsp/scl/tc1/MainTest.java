@@ -10,7 +10,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -258,6 +257,15 @@ class MainTest {
                         .until(ExpectedConditions.elementToBeClickable(By.id("status"))).getAttribute("value");
 
                 assertThat(status).isEqualTo(rowData.get(4));
+            }
+
+            @Test
+            @DisplayName("Should verify that input brand is correctly fill")
+            void shouldVerifyThatInputBrandIsCorrectlyFill() {
+                final String brand = new WebDriverWait(driver, Duration.ofSeconds(2))
+                        .until(ExpectedConditions.elementToBeClickable(By.id("brand"))).getAttribute("value");
+
+                assertThat(brand).isEqualTo(rowData.get(5));
             }
         }
         
