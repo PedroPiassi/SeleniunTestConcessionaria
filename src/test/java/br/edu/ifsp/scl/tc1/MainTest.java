@@ -240,6 +240,15 @@ class MainTest {
 
                 assertThat(year).isEqualTo(rowData.get(2));
             }
+
+            @Test
+            @DisplayName("Should verify that input price is correctly fill")
+            void shouldVerifyThatInputPriceIsCorrectlyFill() {
+                final String price = new WebDriverWait(driver, Duration.ofSeconds(2))
+                        .until(ExpectedConditions.elementToBeClickable(By.id("price"))).getAttribute("value");
+
+                assertThat(price).isEqualTo(rowData.get(3));
+            }
         }
         
         @Test
